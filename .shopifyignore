@@ -1,0 +1,19 @@
+# Keep non-theme repository files out of theme push/pull commands
+.github/
+.husky/
+.vscode/
+docs/
+scripts/
+node_modules/
+.env
+.env.*
+LICENSE
+README.md
+package.json
+pnpm-lock.yaml
+prettier.config.cjs
+.prettierignore
+eslint.config.mjs
+.editorconfig
+.nvmrc
+.gitignore

@@ -1,0 +1,11 @@
+module.exports = {
+  plugins: ["@shopify/prettier-plugin-liquid"],
+  overrides: [
+    {
+      files: ["*.liquid"],
+      options: {
+        parser: "liquid-html",
+      },
+    },
+  ],
+};

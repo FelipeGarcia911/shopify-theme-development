@@ -1,0 +1,49 @@
+name: Deploy PROD Theme
+
+on:
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        description: "Git ref to deploy (default: main)"
+        required: false
+        default: "main"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.git_ref || 'main' }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Install Shopify CLI
+        run: pnpm add -g @shopify/cli
+
+      - name: Deploy to PROD theme
+        env:
+          SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_FLAG_STORE }}
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_PROD_THEME_ID: ${{ secrets.SHOPIFY_PROD_THEME_ID }}
+          SHOPIFY_FLAG_FORCE: "1"
+          CONFIRM_PROD_DEPLOY: "true"
+        run: pnpm run deploy:prod

@@ -1,0 +1,32 @@
+{
+  "name": "shopify-theme-development-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Template for Shopify theme customization workflows with DEV/PROD and CI/CD",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "setup:tools": "pnpm add -g @shopify/cli",
+    "shopify:version": "shopify version",
+    "auth:login": "shopify auth login",
+    "theme:pull": "bash scripts/theme-pull.sh",
+    "dev": "bash scripts/theme-dev.sh",
+    "check": "bash scripts/theme-check.sh",
+    "lint:js": "eslint . --ext .js,.cjs,.mjs --no-error-on-unmatched-pattern",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "deploy:dev": "bash scripts/deploy-dev.sh",
+    "deploy:prod": "bash scripts/deploy-prod.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@shopify/prettier-plugin-liquid": "^1.9.0",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.3.3"
+  },
+  "packageManager": "pnpm@10.11.0"
+}
